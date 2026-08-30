@@ -1,0 +1,16 @@
+{
+  "short_name": "Kibibi",
+  "name": "Kibibi Short Videos App",
+  "icons": [
+    {
+      "src": "assets/images/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#000000",
+  "theme_color": "#ff007f",
+  "display": "standalone",
+  "orientation": "portrait"
+}
