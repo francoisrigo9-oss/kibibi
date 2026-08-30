@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kibibi - Short Videos</title>
-    <!-- SDK Google IMA pour la monétisation internationale -->
+    <!-- SDK Google IMA officiel pour la monétisation internationale (Lien corrigé) -->
     <script src="https://googleapis.com"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,26 +16,25 @@
         /* Chaque flux vidéo prend tout l'écran */
         .video-feed { width: 100%; height: 100vh; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; }
         
-        video { width: 100%; height: 100%; object-fit: cover; }
+        video { width: 100%; height: 100%; object-fit: cover; background-color: #000; }
         
         /* Nom de l'application et overlays */
-        .brand-header { position: absolute; top: 20px; left: 0; width: 100%; text-align: center; z-index: 20; }
+        .brand-header { position: absolute; top: 20px; left: 0; width: 100%; text-align: center; z-index: 20; pointer-events: none; }
         .brand-header h1 { color: #fff; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); font-weight: 800; letter-spacing: 1px; }
         .brand-header span { color: #00f2fe; }
 
-        /* Interface utilisateur sur le côté (Like, Monétiser) */
+        /* Interface utilisateur sur le côté (Bouton de monétisation) */
         .side-bar { position: absolute; right: 15px; bottom: 120px; display: flex; flex-direction: column; gap: 20px; z-index: 20; align-items: center; }
         .action-btn { width: 55px; height: 55px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 22px; cursor: pointer; border: none; backdrop-filter: blur(5px); }
         .action-btn.monetize { background: #ff007f; animation: pulse 2s infinite; }
         
         /* Infos de la vidéo en bas */
-        .video-meta { position: absolute; left: 15px; bottom: 30px; z-index: 20; color: white; max-width: 75%; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .video-meta { position: absolute; left: 15px; bottom: 40px; z-index: 20; color: white; max-width: 75%; text-shadow: 0 1px 3px rgba(0,0,0,0.8); pointer-events: none; }
         .video-meta h3 { font-size: 16px; margin-bottom: 5px; }
         .video-meta p { font-size: 14px; opacity: 0.9; }
 
-        /* Conteneur de publicité Google IMA superposé */
-        #ad-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 30; pointer-events: none; }
-        #ad-container.active { pointer-events: auto; }
+        /* Style des notifications à l'écran */
+        .data-alert { position: absolute; top: 70px; background: rgba(0, 0, 0, 0.7); color: #00f2fe; padding: 8px 15px; border-radius: 20px; font-size: 12px; z-index: 25; font-weight: bold; display: none; }
 
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.7); }
@@ -51,20 +50,20 @@
         <h1>KIBI<span>BI</span></h1>
     </div>
 
-    <!-- Zone publicitaire invisible au départ -->
-    <div id="ad-container"></div>
+    <!-- Notification de consommation de Mo -->
+    <center><div class="data-alert" id="status-alert">Chargement du flux publicitaire...</div></center>
 
     <!-- Flux de vidéos de l'application -->
     <div class="tiktok-container" id="feed-container">
         
-        <!-- Vidéo 1 -->
+        <!-- Vidéo 1 (Lien vidéo réel et valide) -->
         <div class="video-feed">
             <video loop muted autoplay playsinline class="kibibi-video">
                 <source src="https://googleapis.com" type="video/mp4">
             </video>
             <div class="side-bar">
                 <button class="action-btn monetize" onclick="startDataAd()">💰</button>
-                <div style="color:white; font-size:11px; font-weight:bold;">Bonus</div>
+                <div style="color:white; font-size:11px; font-weight:bold; text-shadow: 0 1px 2px #000;">Bonus</div>
             </div>
             <div class="video-meta">
                 <h3>@impact_academy</h3>
@@ -72,7 +71,7 @@
             </div>
         </div>
 
-        <!-- Vidéo 2 (Simule le préchargement automatique consommateur de mégas) -->
+        <!-- Vidéo 2 (Lien vidéo lourd réel et valide) -->
         <div class="video-feed">
             <video loop muted playsinline class="kibibi-video">
                 <source src="https://googleapis.com" type="video/mp4">
@@ -89,48 +88,56 @@
     </div>
 
     <script>
-        var adsLoader, adsManager;
-        var adContainer = document.getElementById('ad-container');
         var activeVideo = document.querySelector('.kibibi-video');
+        var statusAlert = document.getElementById('status-alert');
 
-        // URL du flux publicitaire vidéo mondial de test Google
-        var adTagUrl = 'https://doubleclick.net[referrer_url]&description_url=[description_url]&correlator=[timestamp]';
-
-        // Lancement forcé de la publicité vidéo haute consommation
+        // Fonction robuste pour lancer une vidéo publicitaire lourde haute consommation
         function startDataAd() {
-            adContainer.classList.add('active');
-            activeVideo.pause();
+            // Vidéo HD de test (Simule une publicité vidéo de 15 Mo)
+            var publiciteVideoUrl = "https://googleapis.com";
             
-            var adDisplayContainer = new google.ima.AdDisplayContainer(adContainer, activeVideo);
-            adDisplayContainer.initialize();
+            // Affichage de l'alerte de consommation
+            statusAlert.style.display = "block";
+            statusAlert.innerText = "Téléchargement de la publicité... (Consommation : ~15 MB)";
             
-            adsLoader = new google.ima.AdsLoader(adDisplayContainer);
-            adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
+            // Configuration de la vidéo publicitaire
+            activeVideo.src = publiciteVideoUrl;
+            activeVideo.muted = false; // Active le son pour l'utilisateur
+            activeVideo.loop = false;  // Ne tourne pas en boucle
+            activeVideo.load();
             
-            var adsRequest = new google.ima.AdsRequest();
-            adsRequest.adTagUrl = adTagUrl;
-            adsRequest.linearAdSlotWidth = window.innerWidth;
-            adsRequest.linearAdSlotHeight = window.innerHeight;
-            adsLoader.requestAds(adsRequest);
-        }
+            var playPromise = activeVideo.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // La vidéo se lance avec succès
+                    setTimeout(() => { statusAlert.style.display = "none"; }, 3000);
+                }).catch(error => {
+                    // Secours automatique si le système du téléphone bloque le son sans interaction préalable
+                    activeVideo.muted = true;
+                    activeVideo.play();
+                });
+            }
 
-        function onAdsManagerLoaded(adsManagerLoadedEvent) {
-            adsManager = adsManagerLoadedEvent.getAdsManager(activeVideo);
-            adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.FULLSCREEN);
-            adsManager.start();
-            adsManager.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function() {
-                adContainer.classList.remove('active');
-                adContainer.innerHTML = "";
+            // Quand la vidéo pub se termine, on remet le flux normal TikTok
+            activeVideo.onended = function() {
+                statusAlert.style.display = "block";
+                statusAlert.innerText = "Publicité terminée ! Retour au flux.";
+                activeVideo.src = "https://googleapis.com";
+                activeVideo.muted = true;
+                activeVideo.loop = true;
                 activeVideo.play();
-            });
+                setTimeout(() => { statusAlert.style.display = "none"; }, 2000);
+            };
         }
 
-        /* Détection basique du défilement pour activer la lecture de la vidéo visible (Style TikTok) */
+        /* Gestion du défilement tactile (Style TikTok) */
         document.getElementById('feed-container').addEventListener('scroll', function(e) {
             var videos = document.querySelectorAll('.kibibi-video');
             videos.forEach(function(vid) {
                 var rect = vid.getBoundingClientRect();
-                if(rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                // Si la vidéo occupe la majeure partie de l'écran visible
+                if(rect.top >= -window.innerHeight / 2 && rect.top < window.innerHeight / 2) {
                     if (vid.paused) {
                         vid.play();
                         activeVideo = vid;
@@ -141,7 +148,7 @@
             });
         });
 
-        // Enregistrement du Service Worker pour l'installation sur smartphone
+        // Enregistrement automatique du Service Worker pour installer l'application sur l'écran d'accueil
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
