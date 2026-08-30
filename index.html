@@ -1,161 +1,1135 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kibibi - Short Videos</title>
-    <!-- SDK Google IMA officiel pour la monétisation internationale (Lien corrigé) -->
-    <script src="https://googleapis.com"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { width: 100%; height: 100%; background-color: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        
-        /* Conteneur principal style TikTok (Vertical Snap) */
-        .tiktok-container { width: 100%; height: 100vh; scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
-        
-        /* Chaque flux vidéo prend tout l'écran */
-        .video-feed { width: 100%; height: 100vh; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; }
-        
-        video { width: 100%; height: 100%; object-fit: cover; background-color: #000; }
-        
-        /* Nom de l'application et overlays */
-        .brand-header { position: absolute; top: 20px; left: 0; width: 100%; text-align: center; z-index: 20; pointer-events: none; }
-        .brand-header h1 { color: #fff; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); font-weight: 800; letter-spacing: 1px; }
-        .brand-header span { color: #00f2fe; }
 
-        /* Interface utilisateur sur le côté (Bouton de monétisation) */
-        .side-bar { position: absolute; right: 15px; bottom: 120px; display: flex; flex-direction: column; gap: 20px; z-index: 20; align-items: center; }
-        .action-btn { width: 55px; height: 55px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 22px; cursor: pointer; border: none; backdrop-filter: blur(5px); }
-        .action-btn.monetize { background: #ff007f; animation: pulse 2s infinite; }
-        
-        /* Infos de la vidéo en bas */
-        .video-meta { position: absolute; left: 15px; bottom: 40px; z-index: 20; color: white; max-width: 75%; text-shadow: 0 1px 3px rgba(0,0,0,0.8); pointer-events: none; }
-        .video-meta h3 { font-size: 16px; margin-bottom: 5px; }
-        .video-meta p { font-size: 14px; opacity: 0.9; }
+<meta charset="UTF-8">
 
-        /* Style des notifications à l'écran */
-        .data-alert { position: absolute; top: 70px; background: rgba(0, 0, 0, 0.7); color: #00f2fe; padding: 8px 15px; border-radius: 20px; font-size: 12px; z-index: 25; font-weight: bold; display: none; }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 0, 127, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
-        }
-    </style>
+<title>Kibibi - Vidéos</title>
+
+<meta name="theme-color" content="#000000">
+
+<!-- Icône de Kibibi -->
+<link rel="icon" type="image/png" href="assets/images/kibibi-icon.png">
+
+<link rel="apple-touch-icon"
+href="assets/images/kibibi-icon.png">
+
+<!-- =========================
+     GOOGLE IMA SDK
+========================= -->
+
+<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+    background:#000;
+
+    font-family:
+    Arial,
+    "Segoe UI",
+    sans-serif;
+
+    overflow:hidden;
+}
+
+
+/* =========================
+   APPLICATION
+========================= */
+
+.kibibi-container{
+
+    width:100%;
+    height:100vh;
+
+    background:#000;
+
+    position:relative;
+
+}
+
+
+/* =========================
+   NOM KIBIBI
+========================= */
+
+.brand-header{
+
+    position:fixed;
+
+    top:15px;
+    left:0;
+
+    width:100%;
+
+    text-align:center;
+
+    z-index:100;
+
+    pointer-events:none;
+
+}
+
+.brand-header h1{
+
+    color:white;
+
+    font-size:27px;
+
+    font-weight:900;
+
+    letter-spacing:3px;
+
+    text-shadow:
+    0 2px 10px rgba(0,0,0,.8);
+
+}
+
+.brand-header span{
+
+    color:#ff1493;
+
+}
+
+
+/* =========================
+   FLUX
+========================= */
+
+.tiktok-container{
+
+    width:100%;
+    height:100vh;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    scroll-snap-type:y mandatory;
+
+    scroll-behavior:smooth;
+
+    scrollbar-width:none;
+
+}
+
+.tiktok-container::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-feed{
+
+    width:100%;
+    height:100vh;
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    scroll-snap-align:start;
+
+    scroll-snap-stop:always;
+
+    background:#000;
+
+}
+
+.kibibi-video{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    background:#000;
+
+}
+
+
+/* =========================
+   COUCHE SOMBRE
+========================= */
+
+.video-feed::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:35%;
+
+    background:
+    linear-gradient(
+        transparent,
+        rgba(0,0,0,.75)
+    );
+
+    pointer-events:none;
+
+}
+
+
+/* =========================
+   BOUTONS
+========================= */
+
+.side-bar{
+
+    position:absolute;
+
+    right:15px;
+
+    bottom:120px;
+
+    z-index:50;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+/* bouton */
+
+.action-btn{
+
+    width:55px;
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    rgba(255,255,255,.20);
+
+    color:white;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(8px);
+
+    box-shadow:
+    0 3px 15px rgba(0,0,0,.3);
+
+    transition:.2s;
+
+}
+
+.action-btn:active{
+
+    transform:scale(.88);
+
+}
+
+
+/* bouton bonus */
+
+.action-btn.monetize{
+
+    background:#ff1493;
+
+    animation:pulse 2s infinite;
+
+}
+
+
+/* bouton son */
+
+.sound-btn{
+
+    background:
+    rgba(0,0,0,.45);
+
+}
+
+
+/* =========================
+   BONUS
+========================= */
+
+.bonus-text{
+
+    color:white;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    text-shadow:
+    0 2px 5px #000;
+
+}
+
+
+/* =========================
+   INFOS VIDEO
+========================= */
+
+.video-meta{
+
+    position:absolute;
+
+    left:15px;
+
+    bottom:35px;
+
+    z-index:50;
+
+    max-width:75%;
+
+    color:white;
+
+    text-shadow:
+    0 2px 5px rgba(0,0,0,.9);
+
+}
+
+.video-meta h3{
+
+    font-size:17px;
+
+    margin-bottom:7px;
+
+}
+
+.video-meta p{
+
+    font-size:14px;
+
+    line-height:1.4;
+
+}
+
+
+/* =========================
+   INDICATEUR CHARGEMENT
+========================= */
+
+.loading{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:
+    translate(-50%,-50%);
+
+    color:white;
+
+    z-index:30;
+
+    display:none;
+
+    font-size:14px;
+
+}
+
+
+/* =========================
+   ALERT
+========================= */
+
+.data-alert{
+
+    position:fixed;
+
+    top:65px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    z-index:200;
+
+    display:none;
+
+    background:
+    rgba(0,0,0,.85);
+
+    color:#ff1493;
+
+    padding:10px 18px;
+
+    border-radius:25px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+        box-shadow:
+        0 0 0 0
+        rgba(255,20,147,.7);
+    }
+
+    70%{
+        transform:scale(1.05);
+        box-shadow:
+        0 0 0 15px
+        rgba(255,20,147,0);
+    }
+
+    100%{
+        transform:scale(1);
+        box-shadow:
+        0 0 0 0
+        rgba(255,20,147,0);
+    }
+
+}
+
+
+/* =========================
+   PETITS ÉCRANS
+========================= */
+
+@media(max-width:500px){
+
+    .brand-header h1{
+
+        font-size:23px;
+
+    }
+
+    .side-bar{
+
+        right:10px;
+
+        bottom:105px;
+
+    }
+
+    .action-btn{
+
+        width:50px;
+        height:50px;
+
+        font-size:21px;
+
+    }
+
+    .video-meta{
+
+        bottom:25px;
+
+    }
+
+}
+
+
+/* =========================
+   GRAND ÉCRAN
+========================= */
+
+@media(min-width:800px){
+
+    .tiktok-container{
+
+        max-width:500px;
+
+        margin:auto;
+
+        box-shadow:
+        0 0 50px
+        rgba(0,0,0,.8);
+
+    }
+
+    .brand-header{
+
+        max-width:500px;
+
+        left:50%;
+
+        transform:
+        translateX(-50%);
+
+    }
+
+}
+
+</style>
+
 </head>
+
+
 <body>
 
-    <!-- Entête Fixe -->
-    <div class="brand-header">
-        <h1>KIBI<span>BI</span></h1>
-    </div>
 
-    <!-- Notification de consommation de Mo -->
-    <center><div class="data-alert" id="status-alert">Chargement du flux publicitaire...</div></center>
+<div class="kibibi-container">
 
-    <!-- Flux de vidéos de l'application -->
-    <div class="tiktok-container" id="feed-container">
-        
-        <!-- Vidéo 1 (Lien vidéo réel et valide) -->
-        <div class="video-feed">
-            <video loop muted autoplay playsinline class="kibibi-video">
-                <source src="https://googleapis.com" type="video/mp4">
-            </video>
-            <div class="side-bar">
-                <button class="action-btn monetize" onclick="startDataAd()">💰</button>
-                <div style="color:white; font-size:11px; font-weight:bold; text-shadow: 0 1px 2px #000;">Bonus</div>
-            </div>
-            <div class="video-meta">
-                <h3>@impact_academy</h3>
-                <p>Bienvenue sur Kibibi ! Swipez vers le bas pour charger le flux mondial 🌍</p>
-            </div>
-        </div>
 
-        <!-- Vidéo 2 (Lien vidéo lourd réel et valide) -->
-        <div class="video-feed">
-            <video loop muted playsinline class="kibibi-video">
-                <source src="https://googleapis.com" type="video/mp4">
-            </video>
-            <div class="side-bar">
-                <button class="action-btn monetize" onclick="startDataAd()">💰</button>
-            </div>
-            <div class="video-meta">
-                <h3>@africantech</h3>
-                <p>Le contenu HD se charge en tâche de fond pour une fluidité maximale 🔥</p>
-            </div>
-        </div>
+<!-- =========================
+     NOM DE L'APPLICATION
+========================= -->
 
-    </div>
+<div class="brand-header">
 
-    <script>
-        var activeVideo = document.querySelector('.kibibi-video');
-        var statusAlert = document.getElementById('status-alert');
+<h1>
+KIBI<span>BI</span>
+</h1>
 
-        // Fonction robuste pour lancer une vidéo publicitaire lourde haute consommation
-        function startDataAd() {
-            // Vidéo HD de test (Simule une publicité vidéo de 15 Mo)
-            var publiciteVideoUrl = "https://googleapis.com";
-            
-            // Affichage de l'alerte de consommation
-            statusAlert.style.display = "block";
-            statusAlert.innerText = "Téléchargement de la publicité... (Consommation : ~15 MB)";
-            
-            // Configuration de la vidéo publicitaire
-            activeVideo.src = publiciteVideoUrl;
-            activeVideo.muted = false; // Active le son pour l'utilisateur
-            activeVideo.loop = false;  // Ne tourne pas en boucle
-            activeVideo.load();
-            
-            var playPromise = activeVideo.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // La vidéo se lance avec succès
-                    setTimeout(() => { statusAlert.style.display = "none"; }, 3000);
-                }).catch(error => {
-                    // Secours automatique si le système du téléphone bloque le son sans interaction préalable
-                    activeVideo.muted = true;
-                    activeVideo.play();
-                });
+</div>
+
+
+<!-- =========================
+     MESSAGE
+========================= -->
+
+<div
+class="data-alert"
+id="status-alert"
+>
+Chargement...
+</div>
+
+
+<!-- =========================
+     FLUX VIDEO
+========================= -->
+
+<div
+class="tiktok-container"
+id="feed-container"
+>
+
+
+<!-- =========================
+     VIDEO 1
+========================= -->
+
+<section class="video-feed">
+
+<video
+class="kibibi-video"
+loop
+muted
+autoplay
+playsinline
+preload="metadata"
+>
+
+<source
+src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+type="video/mp4"
+>
+
+Votre navigateur ne supporte pas les vidéos.
+
+</video>
+
+
+<div class="loading">
+Chargement...
+</div>
+
+
+<div class="side-bar">
+
+
+<button
+class="action-btn sound-btn"
+onclick="toggleSound(this)"
+title="Son"
+>
+🔇
+</button>
+
+
+<button
+class="action-btn monetize"
+onclick="startDataAd(this)"
+title="Bonus"
+>
+💰
+</button>
+
+
+<div class="bonus-text">
+Bonus
+</div>
+
+
+</div>
+
+
+<div class="video-meta">
+
+<h3>
+@kibibi
+</h3>
+
+<p>
+Bienvenue sur Kibibi ! 🌍
+Découvrez les vidéos du monde entier.
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     VIDEO 2
+========================= -->
+
+<section class="video-feed">
+
+<video
+class="kibibi-video"
+loop
+muted
+playsinline
+preload="metadata"
+>
+
+<source
+src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+type="video/mp4"
+>
+
+Votre navigateur ne supporte pas les vidéos.
+
+</video>
+
+
+<div class="loading">
+Chargement...
+</div>
+
+
+<div class="side-bar">
+
+
+<button
+class="action-btn sound-btn"
+onclick="toggleSound(this)"
+>
+🔇
+</button>
+
+
+<button
+class="action-btn monetize"
+onclick="startDataAd(this)"
+>
+💰
+</button>
+
+
+<div class="bonus-text">
+Bonus
+</div>
+
+
+</div>
+
+
+<div class="video-meta">
+
+<h3>
+@africantech
+</h3>
+
+<p>
+La technologie africaine en vidéo 🚀🔥
+</p>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     VIDEO 3
+========================= -->
+
+<section class="video-feed">
+
+<video
+class="kibibi-video"
+loop
+muted
+playsinline
+preload="metadata"
+>
+
+<source
+src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
+type="video/mp4"
+>
+
+Votre navigateur ne supporte pas les vidéos.
+
+</video>
+
+
+<div class="loading">
+Chargement...
+</div>
+
+
+<div class="side-bar">
+
+
+<button
+class="action-btn sound-btn"
+onclick="toggleSound(this)"
+>
+🔇
+</button>
+
+
+<button
+class="action-btn monetize"
+onclick="startDataAd(this)"
+>
+💰
+</button>
+
+
+<div class="bonus-text">
+Bonus
+</div>
+
+
+</div>
+
+
+<div class="video-meta">
+
+<h3>
+@kibibi_world
+</h3>
+
+<p>
+Partage tes moments avec la communauté Kibibi ❤️
+</p>
+
+</div>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+const feed =
+document.getElementById("feed-container");
+
+const videos =
+document.querySelectorAll(".kibibi-video");
+
+const alertBox =
+document.getElementById("status-alert");
+
+let activeVideo = videos[0];
+
+let adPlaying = false;
+
+
+/* =====================================================
+   AFFICHER UN MESSAGE
+===================================================== */
+
+function showAlert(message){
+
+    alertBox.innerText = message;
+
+    alertBox.style.display = "block";
+
+    setTimeout(function(){
+
+        alertBox.style.display = "none";
+
+    },3000);
+
+}
+
+
+/* =====================================================
+   SON
+===================================================== */
+
+function toggleSound(button){
+
+    const feedVideo =
+    button.closest(".video-feed")
+    .querySelector("video");
+
+    videos.forEach(function(video){
+
+        if(video !== feedVideo){
+
+            video.muted = true;
+
+        }
+
+    });
+
+
+    feedVideo.muted =
+    !feedVideo.muted;
+
+
+    if(feedVideo.muted){
+
+        button.innerText="🔇";
+
+    }else{
+
+        button.innerText="🔊";
+
+        activeVideo =
+        feedVideo;
+
+        feedVideo.play().catch(function(){});
+
+    }
+
+}
+
+
+/* =====================================================
+   OBSERVER POUR LE SWIPE
+===================================================== */
+
+const observer =
+new IntersectionObserver(
+
+function(entries){
+
+    entries.forEach(function(entry){
+
+        const video =
+        entry.target;
+
+
+        if(entry.isIntersecting){
+
+            activeVideo =
+            video;
+
+
+            if(!adPlaying){
+
+                video.play()
+                .catch(function(){});
+
             }
 
-            // Quand la vidéo pub se termine, on remet le flux normal TikTok
-            activeVideo.onended = function() {
-                statusAlert.style.display = "block";
-                statusAlert.innerText = "Publicité terminée ! Retour au flux.";
-                activeVideo.src = "https://googleapis.com";
-                activeVideo.muted = true;
-                activeVideo.loop = true;
-                activeVideo.play();
-                setTimeout(() => { statusAlert.style.display = "none"; }, 2000);
-            };
+        }else{
+
+            video.pause();
+
         }
 
-        /* Gestion du défilement tactile (Style TikTok) */
-        document.getElementById('feed-container').addEventListener('scroll', function(e) {
-            var videos = document.querySelectorAll('.kibibi-video');
-            videos.forEach(function(vid) {
-                var rect = vid.getBoundingClientRect();
-                // Si la vidéo occupe la majeure partie de l'écran visible
-                if(rect.top >= -window.innerHeight / 2 && rect.top < window.innerHeight / 2) {
-                    if (vid.paused) {
-                        vid.play();
-                        activeVideo = vid;
-                    }
-                } else {
-                    vid.pause();
-                }
-            });
+    });
+
+},
+
+{
+    threshold:0.65
+});
+
+
+videos.forEach(function(video){
+
+    observer.observe(video);
+
+});
+
+
+/* =====================================================
+   PAUSE AVANT DE QUITTER
+===================================================== */
+
+document.addEventListener(
+"visibilitychange",
+function(){
+
+    if(document.hidden){
+
+        videos.forEach(function(video){
+
+            video.pause();
+
         });
 
-        // Enregistrement automatique du Service Worker pour installer l'application sur l'écran d'accueil
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Kibibi Service Worker activé !'))
-                    .catch(err => console.log('Erreur d\'activation sw.js', err));
-            });
+    }else{
+
+        if(!adPlaying){
+
+            activeVideo
+            .play()
+            .catch(function(){});
+
         }
-    </script>
+
+    }
+
+});
+
+
+/* =====================================================
+   BONUS
+===================================================== */
+
+function startDataAd(button){
+
+    if(adPlaying){
+
+        return;
+
+    }
+
+
+    adPlaying=true;
+
+
+    const videoFeed =
+    button.closest(".video-feed");
+
+    const video =
+    videoFeed.querySelector("video");
+
+
+    showAlert(
+        "💰 Bonus vidéo en préparation..."
+    );
+
+
+    /*
+       IMPORTANT :
+
+       Cette fonction utilise une vidéo
+       de démonstration.
+
+       Une vraie publicité Google IMA
+       nécessite une intégration VAST/
+       VMAP avec un AdDisplayContainer,
+       un AdsLoader et un AdManager.
+    */
+
+
+    const ancienneSource =
+    video.querySelector("source");
+
+
+    const ancienneURL =
+    ancienneSource.src;
+
+
+    video.pause();
+
+
+    /*
+       Vidéo de démonstration
+    */
+
+    video.src =
+    "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+
+
+    video.loop=false;
+
+    video.muted=false;
+
+
+    video.load();
+
+
+    video.play()
+    .then(function(){
+
+        showAlert(
+            "🎁 Bonus en cours..."
+        );
+
+    })
+    .catch(function(){
+
+        video.muted=true;
+
+        video.play();
+
+    });
+
+
+    video.onended=function(){
+
+        video.src =
+        ancienneURL;
+
+        video.loop=true;
+
+        video.muted=true;
+
+        video.load();
+
+        video.play()
+        .catch(function(){});
+
+
+        adPlaying=false;
+
+
+        showAlert(
+            "✅ Bonus terminé !"
+        );
+
+    };
+
+}
+
+
+/* =====================================================
+   PRECHARGEMENT
+===================================================== */
+
+videos.forEach(function(video){
+
+    video.addEventListener(
+        "waiting",
+        function(){
+
+            const loading =
+            video
+            .closest(".video-feed")
+            .querySelector(".loading");
+
+            loading.style.display="block";
+
+        });
+
+    video.addEventListener(
+        "playing",
+        function(){
+
+            const loading =
+            video
+            .closest(".video-feed")
+            .querySelector(".loading");
+
+            loading.style.display="none";
+
+        });
+
+});
+
+
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker
+            .register("./sw.js")
+
+            .then(function(){
+
+                console.log(
+                    "✅ Kibibi PWA activée"
+                );
+
+            })
+
+            .catch(function(error){
+
+                console.log(
+                    "❌ Erreur Service Worker :",
+                    error
+                );
+
+            });
+
+        });
+
+}
+
+</script>
+
+
 </body>
+
 </html>
+```
