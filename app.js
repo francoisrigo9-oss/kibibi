@@ -1,16 +1,11 @@
-/* =========================
-   NAVIGATION
-========================= */
+```javascript
+function showPage(id) {
 
-function showPage(pageId) {
-
-    const pages = document.querySelectorAll(".page");
-
-    pages.forEach(page => {
+    document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
 
-    const page = document.getElementById(pageId);
+    const page = document.getElementById(id);
 
     if (page) {
         page.classList.add("active");
@@ -23,20 +18,15 @@ function showPage(pageId) {
 }
 
 
-/* =========================
-   CREATE POST
-========================= */
+/* CREER PUBLICATION */
 
 function createPost() {
 
     const input = document.getElementById("postInput");
-
     const text = input.value.trim();
 
-    if (text === "") {
-
+    if (!text) {
         alert("Écris quelque chose avant de publier.");
-
         return;
     }
 
@@ -47,27 +37,27 @@ function createPost() {
     article.className = "post";
 
     article.innerHTML = `
-
-        <div class="post-header">
+        <div class="post-head">
 
             <img src="https://i.pravatar.cc/100?img=12">
 
             <div>
-
-                <strong>Utilisateur</strong>
-
+                <strong>Vous</strong>
                 <small>À l'instant</small>
-
             </div>
 
         </div>
 
         <p>${escapeHTML(text)}</p>
 
-        <div class="post-actions">
+        <div class="post-info">
+            ❤️ 0 &nbsp;&nbsp; 💬 0 commentaire
+        </div>
+
+        <div class="post-buttons">
 
             <button onclick="likePost(this)">
-                ❤️ <span>0</span>
+                ❤️ J'aime
             </button>
 
             <button onclick="commentPost()">
@@ -87,208 +77,151 @@ function createPost() {
 }
 
 
-/* =========================
-   LIKE
-========================= */
+/* LIKE */
 
 function likePost(button) {
 
-    const span = button.querySelector("span");
+    button.classList.toggle("liked");
 
-    let number = parseInt(span.textContent);
-
-    number++;
-
-    span.textContent = number;
-
+    if (button.classList.contains("liked")) {
+        button.style.color = "#1877f2";
+    } else {
+        button.style.color = "";
+    }
 }
 
 
-/* =========================
-   COMMENT
-========================= */
+/* COMMENTAIRE */
 
 function commentPost() {
 
-    const comment = prompt("Écris ton commentaire :");
+    const text = prompt("Votre commentaire :");
 
-    if (comment) {
-
-        alert("Commentaire ajouté : " + comment);
-
+    if (text && text.trim()) {
+        alert("Commentaire ajouté !");
     }
-
 }
 
 
-/* =========================
-   SHARE
-========================= */
+/* PARTAGE */
 
 function sharePost() {
-
-    alert("Publication partagée 🔄");
-
+    alert("Publication partagée sur Kibibi 🔄");
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 function sendMessage() {
 
-    const input =
-        document.getElementById("messageInput");
+    const input = document.getElementById("messageInput");
 
-    const text =
-        input.value.trim();
+    const text = input.value.trim();
 
     if (!text) return;
 
     const messages =
         document.getElementById("chatMessages");
 
-    const div =
+    const message =
         document.createElement("div");
 
-    div.className = "message sent";
+    message.className = "sent";
 
-    div.textContent = text;
+    message.textContent = text;
 
-    messages.appendChild(div);
+    messages.appendChild(message);
 
     input.value = "";
 
     messages.scrollTop = messages.scrollHeight;
-
 }
 
 
-/* =========================
-   DARK MODE
-========================= */
+/* RECHERCHE */
+
+function searchPosts() {
+
+    const query =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    document.querySelectorAll("#posts .post")
+        .forEach(post => {
+
+            const content =
+                post.textContent.toLowerCase();
+
+            post.style.display =
+                content.includes(query)
+                ? ""
+                : "none";
+
+        });
+}
+
+
+/* MODE SOMBRE */
 
 function toggleDarkMode() {
 
     document.body.classList.toggle("dark");
 
     localStorage.setItem(
-        "darkMode",
+        "kibibi-dark",
         document.body.classList.contains("dark")
     );
-
 }
 
 
-/* =========================
-   LOAD DARK MODE
-========================= */
-
-window.addEventListener("load", function() {
-
-    const dark =
-        localStorage.getItem("darkMode");
-
-    if (dark === "true") {
-
-        document.body.classList.add("dark");
-
-    }
-
-});
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function searchContent() {
-
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-    const posts =
-        document.querySelectorAll(".post");
-
-    posts.forEach(post => {
-
-        const text =
-            post.textContent.toLowerCase();
-
-        if (text.includes(search)) {
-
-            post.style.display = "";
-
-        } else {
-
-            post.style.display = "none";
-
-        }
-
-    });
-
+if (localStorage.getItem("kibibi-dark") === "true") {
+    document.body.classList.add("dark");
 }
 
 
-/* =========================
-   PHOTO
-========================= */
+/* BOUTONS */
 
-function addPhoto() {
+function choosePhoto() {
+    alert("L'envoi de photos sera connecté au serveur dans la prochaine version.");
+}
 
-    alert(
-        "La fonction d'envoi de photos sera connectée au backend dans la prochaine version."
-    );
+function chooseVideo() {
+    alert("L'envoi de vidéos sera connecté au serveur dans la prochaine version.");
+}
 
+function addLocation() {
+    alert("La localisation sera ajoutée dans la prochaine version.");
 }
 
 
-/* =========================
-   SECURITY
-========================= */
+/* SECURITE */
 
 function escapeHTML(text) {
 
-    const div =
-        document.createElement("div");
+    const div = document.createElement("div");
 
     div.textContent = text;
 
     return div.innerHTML;
-
 }
 
 
-/* =========================
-   PWA
-========================= */
+/* PWA */
 
 if ("serviceWorker" in navigator) {
 
-    window.addEventListener("load", function() {
+    window.addEventListener("load", () => {
 
-        navigator.serviceWorker
-            .register("sw.js")
+        navigator.serviceWorker.register("./sw.js")
             .then(() => {
-
-                console.log(
-                    "Service Worker actif."
-                );
-
+                console.log("Kibibi PWA activée.");
             })
             .catch(error => {
-
-                console.log(
-                    "Erreur Service Worker:",
-                    error
-                );
-
+                console.error("Erreur PWA :", error);
             });
 
     });
-
 }
+```
