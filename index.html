@@ -1,213 +1,94 @@
 ```html
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color"
-          content="#1877f2">
-
-    <meta name="description"
-          content="Kibibi - Connectez-vous, partagez et découvrez.">
+    <meta name="theme-color" content="#1877f2">
+    <meta name="description" content="Kibibi - Le réseau social qui connecte le monde">
 
     <title>Kibibi</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <link rel="manifest"
-          href="manifest.json">
-
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-
 <header class="topbar">
 
-    <div class="brand"
-         onclick="showPage('home')">
-
+    <div class="brand" onclick="showPage('home')">
         <div class="logo">K</div>
-
-        <span>Kibibi</span>
-
+        <strong>Kibibi</strong>
     </div>
 
-
-    <div class="search-box">
-
-        <span>🔎</span>
-
+    <div class="search">
+        🔎
         <input
             id="searchInput"
             type="search"
             placeholder="Rechercher sur Kibibi..."
             oninput="searchPosts()">
-
     </div>
 
-
-    <div class="top-actions">
-
-        <button onclick="showPage('home')">
-            🏠
-        </button>
-
-        <button onclick="showPage('messages')">
-            💬
-        </button>
-
-        <button onclick="showPage('notifications')"
-                class="notification-button">
-
-            🔔
-
-            <b id="notificationCount">
-                3
-            </b>
-
-        </button>
-
-        <button onclick="showPage('profile')">
-            👤
-        </button>
-
+    <div class="top-buttons">
+        <button onclick="showPage('home')">🏠</button>
+        <button onclick="showPage('messages')">💬</button>
+        <button onclick="showPage('notifications')">🔔</button>
+        <button onclick="showPage('profile')">👤</button>
     </div>
 
 </header>
 
 
-<!-- ================= SIDEBAR ================= -->
-
 <aside class="sidebar">
 
-    <div class="user-card">
-
-        <img
-            src="https://i.pravatar.cc/100?img=12"
-            alt="Profil">
-
+    <div class="user">
+        <img src="https://i.pravatar.cc/100?img=12">
         <div>
-
             <strong>Utilisateur</strong>
-
-            <small>
-                @kibibi
-            </small>
-
+            <small>@kibibi</small>
         </div>
-
     </div>
 
+    <button onclick="showPage('home')">🏠 <span>Accueil</span></button>
+    <button onclick="showPage('explore')">🔎 <span>Explorer</span></button>
+    <button onclick="showPage('friends')">👥 <span>Amis</span></button>
+    <button onclick="showPage('messages')">💬 <span>Messages</span></button>
+    <button onclick="showPage('notifications')">🔔 <span>Notifications</span></button>
+    <button onclick="showPage('gallery')">🖼️ <span>Galerie</span></button>
+    <button onclick="showPage('blog')">📰 <span>Blog</span></button>
+    <button onclick="showPage('profile')">👤 <span>Profil</span></button>
 
-    <nav>
+    <hr>
 
-        <button onclick="showPage('home')">
-            🏠
-            <span>Accueil</span>
-        </button>
-
-        <button onclick="showPage('explore')">
-            🔎
-            <span>Explorer</span>
-        </button>
-
-        <button onclick="showPage('friends')">
-            👥
-            <span>Amis</span>
-        </button>
-
-        <button onclick="showPage('messages')">
-            💬
-            <span>Messages</span>
-        </button>
-
-        <button onclick="showPage('notifications')">
-            🔔
-            <span>Notifications</span>
-        </button>
-
-        <button onclick="showPage('gallery')">
-            🖼️
-            <span>Galerie</span>
-        </button>
-
-        <button onclick="showPage('blog')">
-            📰
-            <span>Blog</span>
-        </button>
-
-        <button onclick="showPage('profile')">
-            👤
-            <span>Profil</span>
-        </button>
-
-    </nav>
-
-
-    <div class="sidebar-bottom">
-
-        <button onclick="toggleDarkMode()">
-            🌙
-            <span>Mode sombre</span>
-        </button>
-
-        <button>
-            ⚙️
-            <span>Paramètres</span>
-        </button>
-
-    </div>
+    <button onclick="toggleDarkMode()">🌙 <span>Mode sombre</span></button>
+    <button>⚙️ <span>Paramètres</span></button>
 
 </aside>
 
 
-<!-- ================= CONTENU ================= -->
-
 <main>
 
 
-<!-- ================= ACCUEIL ================= -->
+<section id="home" class="page active">
 
-<section id="home"
-         class="page active">
-
-    <div class="welcome">
-
+    <div class="hero">
         <div>
-
-            <h1>
-                Bienvenue sur Kibibi 👋
-            </h1>
-
-            <p>
-                Connecte-toi avec le monde.
-            </p>
-
+            <h1>Bienvenue sur Kibibi 👋</h1>
+            <p>Connecte-toi, partage et découvre le monde.</p>
         </div>
 
-        <div class="welcome-logo">
-            K
-        </div>
-
+        <div class="big-logo">K</div>
     </div>
 
 
-    <!-- CREATE POST -->
+    <div class="create">
 
-    <div class="create-post">
+        <div class="create-row">
 
-        <div class="create-top">
-
-            <img
-                src="https://i.pravatar.cc/100?img=12"
-                alt="Profil">
+            <img src="https://i.pravatar.cc/100?img=12">
 
             <input
                 id="postInput"
@@ -216,108 +97,62 @@
 
         </div>
 
-
         <div class="create-actions">
 
-            <button onclick="photoMessage()">
-                📷
-                <span>Photo</span>
-            </button>
+            <button onclick="choosePhoto()">📷 Photo</button>
+            <button onclick="chooseVideo()">🎥 Vidéo</button>
+            <button onclick="addLocation()">📍 Lieu</button>
 
-            <button onclick="videoMessage()">
-                🎥
-                <span>Vidéo</span>
-            </button>
-
-            <button onclick="locationMessage()">
-                📍
-                <span>Lieu</span>
-            </button>
-
-            <button class="publish"
-                    onclick="createPost()">
-
+            <button
+                class="publish"
+                onclick="createPost()">
                 Publier
-
             </button>
 
         </div>
 
     </div>
 
-
-    <!-- FIL -->
 
     <div id="posts">
 
-
-        <!-- POST 1 -->
-
         <article class="post">
 
-            <div class="post-header">
+            <div class="post-head">
 
-                <img
-                    src="https://i.pravatar.cc/100?img=11">
+                <img src="https://i.pravatar.cc/100?img=11">
 
                 <div>
-
-                    <strong>
-                        Jean Michel
-                    </strong>
-
-                    <small>
-                        Il y a 15 minutes
-                    </small>
-
+                    <strong>Jean Michel</strong>
+                    <small>Il y a 15 minutes</small>
                 </div>
 
-                <button class="more">
-                    ⋯
-                </button>
+                <button class="more">•••</button>
 
             </div>
 
-
-            <p class="post-text">
-
+            <p>
                 Bienvenue sur Kibibi 🚀
-
-                Une nouvelle plateforme sociale
-                pour connecter les personnes
-                partout dans le monde.
-
+                Une nouvelle plateforme sociale pour connecter
+                les personnes partout dans le monde.
             </p>
 
-
-            <div class="post-stats">
-
-                <span>
-                    ❤️ 128
-                </span>
-
-                <span>
-                    24 commentaires
-                </span>
-
+            <div class="post-info">
+                ❤️ 128 &nbsp;&nbsp; 💬 24 commentaires
             </div>
 
-
-            <div class="post-actions">
+            <div class="post-buttons">
 
                 <button onclick="likePost(this)">
-                    ❤️
-                    <span>J'aime</span>
+                    ❤️ J'aime
                 </button>
 
                 <button onclick="commentPost()">
-                    💬
-                    <span>Commenter</span>
+                    💬 Commenter
                 </button>
 
                 <button onclick="sharePost()">
-                    🔄
-                    <span>Partager</span>
+                    🔄 Partager
                 </button>
 
             </div>
@@ -325,75 +160,45 @@
         </article>
 
 
-        <!-- POST 2 -->
-
         <article class="post">
 
-            <div class="post-header">
+            <div class="post-head">
 
-                <img
-                    src="https://i.pravatar.cc/100?img=32">
+                <img src="https://i.pravatar.cc/100?img=32">
 
                 <div>
-
-                    <strong>
-                        Marie Claire
-                    </strong>
-
-                    <small>
-                        Il y a 1 heure
-                    </small>
-
+                    <strong>Marie Claire</strong>
+                    <small>Il y a 1 heure</small>
                 </div>
 
-                <button class="more">
-                    ⋯
-                </button>
+                <button class="more">•••</button>
 
             </div>
 
-
-            <p class="post-text">
-
-                Une belle journée avec mes amis ❤️
-
+            <p>
+                Une magnifique journée avec mes amis ❤️
             </p>
-
 
             <img
-                class="post-photo"
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80"
-                alt="Publication">
+                class="post-image"
+                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80">
 
-
-            <div class="post-stats">
-
-                <span>
-                    ❤️ 256
-                </span>
-
-                <span>
-                    48 commentaires
-                </span>
-
+            <div class="post-info">
+                ❤️ 256 &nbsp;&nbsp; 💬 48 commentaires
             </div>
 
-
-            <div class="post-actions">
+            <div class="post-buttons">
 
                 <button onclick="likePost(this)">
-                    ❤️
-                    <span>J'aime</span>
+                    ❤️ J'aime
                 </button>
 
                 <button onclick="commentPost()">
-                    💬
-                    <span>Commenter</span>
+                    💬 Commenter
                 </button>
 
                 <button onclick="sharePost()">
-                    🔄
-                    <span>Partager</span>
+                    🔄 Partager
                 </button>
 
             </div>
@@ -405,75 +210,31 @@
 </section>
 
 
-<!-- ================= EXPLORER ================= -->
+<section id="explore" class="page">
 
-<section id="explore"
-         class="page">
-
-    <div class="page-title">
-
+    <div class="title">
         <h1>🔎 Explorer</h1>
-
-        <p>
-            Découvrez les contenus populaires.
-        </p>
-
+        <p>Découvrez les contenus populaires.</p>
     </div>
 
+    <div class="cards">
 
-    <div class="explore-grid">
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-                🔥
-            </div>
-
-            <h2>
-                Tendances
-            </h2>
-
-            <p>
-                Découvrez les publications
-                populaires sur Kibibi.
-            </p>
-
+        <div class="card">
+            <div class="icon">🔥</div>
+            <h2>Tendances</h2>
+            <p>Découvrez les publications populaires.</p>
         </div>
 
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-                👥
-            </div>
-
-            <h2>
-                Utilisateurs
-            </h2>
-
-            <p>
-                Trouvez de nouvelles personnes
-                et développez votre réseau.
-            </p>
-
+        <div class="card">
+            <div class="icon">👥</div>
+            <h2>Utilisateurs</h2>
+            <p>Trouvez de nouvelles personnes.</p>
         </div>
 
-
-        <div class="feature-card">
-
-            <div class="feature-icon">
-                📰
-            </div>
-
-            <h2>
-                Actualités
-            </h2>
-
-            <p>
-                Les dernières actualités
-                de la communauté.
-            </p>
-
+        <div class="card">
+            <div class="icon">🌍</div>
+            <h2>Monde</h2>
+            <p>Découvrez la communauté Kibibi.</p>
         </div>
 
     </div>
@@ -481,79 +242,34 @@
 </section>
 
 
-<!-- ================= AMIS ================= -->
+<section id="friends" class="page">
 
-<section id="friends"
-         class="page">
-
-    <div class="page-title">
-
-        <h1>👥 Mes amis</h1>
-
-        <p>
-            Gérez votre réseau.
-        </p>
-
+    <div class="title">
+        <h1>👥 Amis</h1>
+        <p>Gérez votre réseau.</p>
     </div>
 
+    <div class="cards">
 
-    <div class="friends-grid">
-
-
-        <div class="friend-card">
-
+        <div class="friend">
             <img src="https://i.pravatar.cc/200?img=5">
-
-            <h3>
-                Alex
-            </h3>
-
-            <p>
-                @alex
-            </p>
-
-            <button>
-                Voir le profil
-            </button>
-
+            <h3>Alex</h3>
+            <p>@alex</p>
+            <button>Voir le profil</button>
         </div>
 
-
-        <div class="friend-card">
-
+        <div class="friend">
             <img src="https://i.pravatar.cc/200?img=8">
-
-            <h3>
-                Sarah
-            </h3>
-
-            <p>
-                @sarah
-            </p>
-
-            <button>
-                Voir le profil
-            </button>
-
+            <h3>Sarah</h3>
+            <p>@sarah</p>
+            <button>Voir le profil</button>
         </div>
 
-
-        <div class="friend-card">
-
+        <div class="friend">
             <img src="https://i.pravatar.cc/200?img=15">
-
-            <h3>
-                David
-            </h3>
-
-            <p>
-                @david
-            </p>
-
-            <button>
-                Voir le profil
-            </button>
-
+            <h3>David</h3>
+            <p>@david</p>
+            <button>Voir le profil</button>
         </div>
 
     </div>
@@ -561,61 +277,39 @@
 </section>
 
 
-<!-- ================= MESSAGES ================= -->
+<section id="messages" class="page">
 
-<section id="messages"
-         class="page">
-
-    <div class="page-title">
-
+    <div class="title">
         <h1>💬 Messages</h1>
-
-        <p>
-            Discutez avec vos amis.
-        </p>
-
+        <p>Discutez avec vos amis.</p>
     </div>
-
 
     <div class="chat">
 
-        <div class="chat-header">
-
-            <img
-                src="https://i.pravatar.cc/100?img=8">
+        <div class="chat-user">
+            <img src="https://i.pravatar.cc/100?img=8">
 
             <div>
-
-                <strong>
-                    Sarah
-                </strong>
-
-                <small>
-                    En ligne
-                </small>
-
+                <strong>Sarah</strong>
+                <small>🟢 En ligne</small>
             </div>
-
         </div>
 
+        <div id="chatMessages" class="chat-messages">
 
-        <div id="chatMessages"
-             class="chat-messages">
-
-            <div class="message received">
+            <div class="received">
                 Salut 👋
             </div>
 
-            <div class="message sent">
+            <div class="sent">
                 Salut ! Comment ça va ?
             </div>
 
-            <div class="message received">
-                Ça va très bien 😊
+            <div class="received">
+                Très bien 😊
             </div>
 
         </div>
-
 
         <div class="chat-input">
 
@@ -623,9 +317,7 @@
                 id="messageInput"
                 placeholder="Écrire un message...">
 
-            <button onclick="sendMessage()">
-                ➤
-            </button>
+            <button onclick="sendMessage()">➤</button>
 
         </div>
 
@@ -634,85 +326,34 @@
 </section>
 
 
-<!-- ================= NOTIFICATIONS ================= -->
+<section id="notifications" class="page">
 
-<section id="notifications"
-         class="page">
-
-    <div class="page-title">
-
+    <div class="title">
         <h1>🔔 Notifications</h1>
-
-        <p>
-            Vos dernières notifications.
-        </p>
-
+        <p>Vos dernières notifications.</p>
     </div>
 
+    <div class="notifications">
 
-    <div class="notification-list">
+        <div>❤️ Jean a aimé votre publication.</div>
 
-        <div class="notification">
-            ❤️
-            <div>
-                <strong>
-                    Jean a aimé votre publication.
-                </strong>
-                <small>
-                    Il y a 5 minutes
-                </small>
-            </div>
-        </div>
+        <div>👥 Sarah vous a envoyé une demande d'ami.</div>
 
-
-        <div class="notification">
-            👥
-            <div>
-                <strong>
-                    Sarah vous a envoyé
-                    une demande d'ami.
-                </strong>
-                <small>
-                    Il y a 20 minutes
-                </small>
-            </div>
-        </div>
-
-
-        <div class="notification">
-            💬
-            <div>
-                <strong>
-                    David a commenté votre publication.
-                </strong>
-                <small>
-                    Il y a 1 heure
-                </small>
-            </div>
-        </div>
+        <div>💬 David a commenté votre publication.</div>
 
     </div>
 
 </section>
 
 
-<!-- ================= GALERIE ================= -->
+<section id="gallery" class="page">
 
-<section id="gallery"
-         class="page">
-
-    <div class="page-title">
-
+    <div class="title">
         <h1>🖼️ Galerie</h1>
-
-        <p>
-            Vos souvenirs en images.
-        </p>
-
+        <p>Découvrez les photos de la communauté.</p>
     </div>
 
-
-    <div class="gallery-grid">
+    <div class="gallery">
 
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80">
 
@@ -727,47 +368,30 @@
 </section>
 
 
-<!-- ================= BLOG ================= -->
+<section id="blog" class="page">
 
-<section id="blog"
-         class="page">
-
-    <div class="page-title">
-
+    <div class="title">
         <h1>📰 Blog</h1>
-
-        <p>
-            Découvrez nos articles.
-        </p>
-
+        <p>Actualités et articles Kibibi.</p>
     </div>
 
+    <article class="blog">
 
-    <article class="blog-card">
-
-        <img
-            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1000&q=80">
+        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1000&q=80">
 
         <div>
-
-            <span class="category">
-                KIBIBI
-            </span>
+            <span>KIBIBI</span>
 
             <h2>
                 Bienvenue dans le monde de Kibibi
             </h2>
 
             <p>
-                Découvrez une nouvelle manière
-                de communiquer, partager et
-                découvrir des contenus.
+                Découvrez une nouvelle manière de
+                communiquer, partager et découvrir.
             </p>
 
-            <button>
-                Lire l'article
-            </button>
-
+            <button>Lire l'article</button>
         </div>
 
     </article>
@@ -775,74 +399,54 @@
 </section>
 
 
-<!-- ================= PROFIL ================= -->
+<section id="profile" class="page">
 
-<section id="profile"
-         class="page">
+    <div class="cover">
 
-    <div class="profile-cover">
-
-        <div class="profile-avatar">
-
-            <img
-                src="https://i.pravatar.cc/200?img=12">
-
+        <div class="avatar">
+            <img src="https://i.pravatar.cc/200?img=12">
         </div>
 
     </div>
 
-
-    <div class="profile-info">
+    <div class="profile">
 
         <div>
-
-            <h1>
-                Utilisateur Kibibi
-            </h1>
-
-            <p>
-                @kibibi
-            </p>
-
+            <h1>Utilisateur Kibibi</h1>
+            <p>@kibibi</p>
         </div>
 
-        <button>
-            ✏️ Modifier
-        </button>
+        <button>✏️ Modifier</button>
 
     </div>
 
-
-    <div class="profile-stats">
+    <div class="stats">
 
         <div>
             <strong>125</strong>
-            <span>Publications</span>
+            Publications
         </div>
 
         <div>
             <strong>2.5K</strong>
-            <span>Amis</span>
+            Amis
         </div>
 
         <div>
             <strong>8.7K</strong>
-            <span>Abonnés</span>
+            Abonnés
         </div>
 
     </div>
 
+    <div class="about">
 
-    <div class="profile-about">
-
-        <h2>
-            À propos
-        </h2>
+        <h2>À propos</h2>
 
         <p>
             Bienvenue sur mon profil Kibibi.
-            Je partage mes passions,
-            mes photos et mes actualités.
+            Je partage mes passions, mes photos
+            et mes actualités.
         </p>
 
     </div>
@@ -851,8 +455,6 @@
 
 </main>
 
-
-<!-- ================= MOBILE NAV ================= -->
 
 <nav class="mobile-nav">
 
@@ -887,2081 +489,5 @@
 <script src="app.js"></script>
 
 </body>
-
 </html>
 ```
-
----
-
-# 2. `style.css`
-
-```css
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-
-    --blue: #1877f2;
-    --blue-dark: #0d65d9;
-
-    --background: #f0f2f5;
-    --card: #ffffff;
-
-    --text: #1c1e21;
-    --muted: #65676b;
-
-    --border: #dddfe2;
-
-    --radius: 14px;
-
-}
-
-
-body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background: var(--background);
-
-    color: var(--text);
-
-    transition: 0.25s;
-
-}
-
-
-/* ================= LOGO ================= */
-
-.brand {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 9px;
-
-    cursor: pointer;
-
-    user-select: none;
-
-}
-
-
-.brand span {
-
-    font-size: 25px;
-
-    font-weight: 800;
-
-    letter-spacing: -1px;
-
-}
-
-
-.logo {
-
-    width: 42px;
-
-    height: 42px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #2d8cff,
-            #0d65d9
-        );
-
-    color: white;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 29px;
-
-    font-weight: 900;
-
-    box-shadow:
-        0 4px 12px
-        rgba(24,119,242,.30);
-
-}
-
-
-/* ================= HEADER ================= */
-
-.topbar {
-
-    height: 66px;
-
-    background: white;
-
-    position: fixed;
-
-    top: 0;
-
-    left: 0;
-
-    right: 0;
-
-    z-index: 1000;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding:
-        0 22px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.search-box {
-
-    width: 360px;
-
-    height: 42px;
-
-    background: var(--background);
-
-    border-radius: 24px;
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 0 15px;
-
-    gap: 8px;
-
-}
-
-
-.search-box input {
-
-    width: 100%;
-
-    border: none;
-
-    outline: none;
-
-    background: transparent;
-
-    font-size: 15px;
-
-}
-
-
-.top-actions {
-
-    display: flex;
-
-    gap: 8px;
-
-}
-
-
-.top-actions button {
-
-    width: 42px;
-
-    height: 42px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: var(--background);
-
-    cursor: pointer;
-
-    font-size: 18px;
-
-    position: relative;
-
-}
-
-
-.top-actions button:hover {
-
-    background: #e4e6eb;
-
-}
-
-
-.notification-button b {
-
-    position: absolute;
-
-    top: -3px;
-
-    right: -2px;
-
-    background: #e41e3f;
-
-    color: white;
-
-    width: 18px;
-
-    height: 18px;
-
-    font-size: 10px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-}
-
-
-/* ================= SIDEBAR ================= */
-
-.sidebar {
-
-    position: fixed;
-
-    left: 0;
-
-    top: 66px;
-
-    bottom: 0;
-
-    width: 245px;
-
-    background: white;
-
-    padding: 20px 14px;
-
-    border-right:
-        1px solid var(--border);
-
-    z-index: 900;
-
-}
-
-
-.user-card {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 8px;
-
-    margin-bottom: 15px;
-
-}
-
-
-.user-card img {
-
-    width: 45px;
-
-    height: 45px;
-
-    border-radius: 50%;
-
-}
-
-
-.user-card small {
-
-    display: block;
-
-    color: var(--muted);
-
-    margin-top: 3px;
-
-}
-
-
-.sidebar nav button,
-.sidebar-bottom button {
-
-    width: 100%;
-
-    border: none;
-
-    background: transparent;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 13px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    text-align: left;
-
-    font-size: 15px;
-
-}
-
-
-.sidebar nav button:hover,
-.sidebar-bottom button:hover {
-
-    background: var(--background);
-
-}
-
-
-.sidebar-bottom {
-
-    position: absolute;
-
-    left: 14px;
-
-    right: 14px;
-
-    bottom: 20px;
-
-}
-
-
-/* ================= MAIN ================= */
-
-main {
-
-    margin-left: 245px;
-
-    padding:
-        90px 25px 90px;
-
-    max-width: 1050px;
-
-    margin-right: auto;
-
-}
-
-
-.page {
-
-    display: none;
-
-}
-
-
-.page.active {
-
-    display: block;
-
-}
-
-
-/* ================= WELCOME ================= */
-
-.welcome {
-
-    min-height: 170px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #1877f2,
-            #0755bd
-        );
-
-    color: white;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 30px;
-
-    margin-bottom: 20px;
-
-}
-
-
-.welcome h1 {
-
-    font-size: 28px;
-
-    margin-bottom: 8px;
-
-}
-
-
-.welcome p {
-
-    opacity: .9;
-
-}
-
-
-.welcome-logo {
-
-    width: 95px;
-
-    height: 95px;
-
-    background: white;
-
-    color: var(--blue);
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 65px;
-
-    font-weight: 900;
-
-}
-
-
-/* ================= CREATE POST ================= */
-
-.create-post {
-
-    background: white;
-
-    border-radius: var(--radius);
-
-    padding: 16px;
-
-    margin-bottom: 20px;
-
-    border:
-        1px solid var(--border);
-
-}
-
-
-.create-top {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-}
-
-
-.create-top img {
-
-    width: 45px;
-
-    height: 45px;
-
-    border-radius: 50%;
-
-}
-
-
-.create-top input {
-
-    flex: 1;
-
-    border: none;
-
-    outline: none;
-
-    background: var(--background);
-
-    border-radius: 25px;
-
-    padding: 13px 18px;
-
-    font-size: 15px;
-
-}
-
-
-.create-actions {
-
-    border-top:
-        1px solid var(--border);
-
-    margin-top: 14px;
-
-    padding-top: 12px;
-
-    display: flex;
-
-    gap: 8px;
-
-}
-
-
-.create-actions button {
-
-    border: none;
-
-    background: transparent;
-
-    padding: 9px 14px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-}
-
-
-.create-actions button:hover {
-
-    background: var(--background);
-
-}
-
-
-.create-actions .publish {
-
-    margin-left: auto;
-
-    background: var(--blue);
-
-    color: white;
-
-}
-
-
-/* ================= POST ================= */
-
-.post {
-
-    background: white;
-
-    border-radius: var(--radius);
-
-    border:
-        1px solid var(--border);
-
-    margin-bottom: 18px;
-
-    overflow: hidden;
-
-}
-
-
-.post-header {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 16px;
-
-}
-
-
-.post-header img {
-
-    width: 45px;
-
-    height: 45px;
-
-    border-radius: 50%;
-
-}
-
-
-.post-header small {
-
-    display: block;
-
-    color: var(--muted);
-
-    margin-top: 3px;
-
-}
-
-
-.more {
-
-    margin-left: auto;
-
-    border: none;
-
-    background: transparent;
-
-    font-size: 22px;
-
-    cursor: pointer;
-
-}
-
-
-.post-text {
-
-    padding:
-        0 16px 16px;
-
-    line-height: 1.6;
-
-}
-
-
-.post-photo {
-
-    display: block;
-
-    width: 100%;
-
-    max-height: 550px;
-
-    object-fit: cover;
-
-}
-
-
-.post-stats {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    padding: 12px 16px;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-}
-
-
-.post-actions {
-
-    display: flex;
-
-    border-top:
-        1px solid var(--border);
-
-}
-
-
-.post-actions button {
-
-    flex: 1;
-
-    border: none;
-
-    background: white;
-
-    padding: 13px;
-
-    cursor: pointer;
-
-    color: var(--muted);
-
-    font-weight: 600;
-
-}
-
-
-.post-actions button:hover {
-
-    background: var(--background);
-
-}
-
-
-/* ================= PAGE TITLE ================= */
-
-.page-title {
-
-    margin-bottom: 25px;
-
-}
-
-
-.page-title h1 {
-
-    font-size: 28px;
-
-    margin-bottom: 7px;
-
-}
-
-
-.page-title p {
-
-    color: var(--muted);
-
-}
-
-
-/* ================= CARDS ================= */
-
-.explore-grid,
-.friends-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
-
-    gap: 18px;
-
-}
-
-
-.feature-card,
-.friend-card,
-.blog-card,
-.profile-about {
-
-    background: white;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    padding: 22px;
-
-}
-
-
-.feature-icon {
-
-    font-size: 35px;
-
-    margin-bottom: 15px;
-
-}
-
-
-.feature-card h2 {
-
-    margin-bottom: 8px;
-
-}
-
-
-.feature-card p {
-
-    color: var(--muted);
-
-    line-height: 1.5;
-
-}
-
-
-/* ================= FRIENDS ================= */
-
-.friend-card {
-
-    text-align: center;
-
-}
-
-
-.friend-card img {
-
-    width: 110px;
-
-    height: 110px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-}
-
-
-.friend-card h3 {
-
-    margin-top: 12px;
-
-}
-
-
-.friend-card p {
-
-    color: var(--muted);
-
-    margin: 5px;
-
-}
-
-
-.friend-card button {
-
-    margin-top: 12px;
-
-    background: var(--blue);
-
-    color: white;
-
-    border: none;
-
-    padding: 9px 15px;
-
-    border-radius: 8px;
-
-}
-
-
-/* ================= CHAT ================= */
-
-.chat {
-
-    background: white;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    overflow: hidden;
-
-}
-
-
-.chat-header {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 15px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.chat-header img {
-
-    width: 45px;
-
-    height: 45px;
-
-    border-radius: 50%;
-
-}
-
-
-.chat-header small {
-
-    display: block;
-
-    color: #31a24c;
-
-}
-
-
-.chat-messages {
-
-    min-height: 350px;
-
-    padding: 20px;
-
-}
-
-
-.message {
-
-    max-width: 70%;
-
-    padding: 11px 15px;
-
-    border-radius: 18px;
-
-    margin-bottom: 10px;
-
-}
-
-
-.received {
-
-    background: var(--background);
-
-}
-
-
-.sent {
-
-    margin-left: auto;
-
-    background: var(--blue);
-
-    color: white;
-
-}
-
-
-.chat-input {
-
-    display: flex;
-
-    gap: 10px;
-
-    padding: 12px;
-
-    border-top:
-        1px solid var(--border);
-
-}
-
-
-.chat-input input {
-
-    flex: 1;
-
-    border: none;
-
-    outline: none;
-
-    background: var(--background);
-
-    border-radius: 25px;
-
-    padding: 12px 16px;
-
-}
-
-
-.chat-input button {
-
-    width: 44px;
-
-    height: 44px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: var(--blue);
-
-    color: white;
-
-}
-
-
-/* ================= NOTIFICATIONS ================= */
-
-.notification-list {
-
-    display: grid;
-
-    gap: 10px;
-
-}
-
-
-.notification {
-
-    background: white;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 12px;
-
-    padding: 17px;
-
-    display: flex;
-
-    gap: 14px;
-
-    align-items: center;
-
-}
-
-
-.notification small {
-
-    display: block;
-
-    color: var(--muted);
-
-    margin-top: 5px;
-
-}
-
-
-/* ================= GALLERY ================= */
-
-.gallery-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(200px, 1fr)
-        );
-
-    gap: 12px;
-
-}
-
-
-.gallery-grid img {
-
-    width: 100%;
-
-    height: 230px;
-
-    object-fit: cover;
-
-    border-radius: 12px;
-
-}
-
-
-/* ================= BLOG ================= */
-
-.blog-card {
-
-    overflow: hidden;
-
-    padding: 0;
-
-}
-
-
-.blog-card img {
-
-    width: 100%;
-
-    height: 300px;
-
-    object-fit: cover;
-
-}
-
-
-.blog-card div {
-
-    padding: 22px;
-
-}
-
-
-.category {
-
-    color: var(--blue);
-
-    font-weight: bold;
-
-    font-size: 12px;
-
-}
-
-
-.blog-card h2 {
-
-    margin: 10px 0;
-
-}
-
-
-.blog-card p {
-
-    color: var(--muted);
-
-    line-height: 1.6;
-
-}
-
-
-.blog-card button {
-
-    margin-top: 15px;
-
-    background: var(--blue);
-
-    color: white;
-
-    border: none;
-
-    padding: 10px 17px;
-
-    border-radius: 8px;
-
-}
-
-
-/* ================= PROFILE ================= */
-
-.profile-cover {
-
-    height: 300px;
-
-    border-radius: 18px 18px 0 0;
-
-    background:
-        linear-gradient(
-            rgba(0,0,0,.25),
-            rgba(0,0,0,.25)
-        ),
-        url(
-            "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
-        );
-
-    background-size: cover;
-
-    background-position: center;
-
-    position: relative;
-
-}
-
-
-.profile-avatar {
-
-    position: absolute;
-
-    left: 30px;
-
-    bottom: -65px;
-
-}
-
-
-.profile-avatar img {
-
-    width: 130px;
-
-    height: 130px;
-
-    border-radius: 50%;
-
-    border: 5px solid white;
-
-}
-
-
-.profile-info {
-
-    background: white;
-
-    padding:
-        75px 25px 20px;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-}
-
-
-.profile-info p {
-
-    color: var(--muted);
-
-}
-
-
-.profile-info button {
-
-    background: var(--blue);
-
-    color: white;
-
-    border: none;
-
-    padding: 10px 16px;
-
-    border-radius: 8px;
-
-}
-
-
-.profile-stats {
-
-    background: white;
-
-    border-top:
-        1px solid var(--border);
-
-    border-bottom:
-        1px solid var(--border);
-
-    display: flex;
-
-    justify-content: space-around;
-
-    padding: 18px;
-
-}
-
-
-.profile-stats div {
-
-    text-align: center;
-
-}
-
-
-.profile-stats span {
-
-    display: block;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-top: 4px;
-
-}
-
-
-.profile-about {
-
-    margin-top: 18px;
-
-}
-
-
-/* ================= MOBILE ================= */
-
-.mobile-nav {
-
-    display: none;
-
-}
-
-
-@media(max-width: 800px) {
-
-
-    .topbar {
-
-        padding: 0 10px;
-
-    }
-
-
-    .brand span {
-
-        display: none;
-
-    }
-
-
-    .search-box {
-
-        width: 45%;
-
-    }
-
-
-    .sidebar {
-
-        display: none;
-
-    }
-
-
-    main {
-
-        margin-left: 0;
-
-        padding:
-            82px 10px 85px;
-
-    }
-
-
-    .top-actions button:nth-child(1) {
-
-        display: none;
-
-    }
-
-
-    .welcome {
-
-        padding: 22px;
-
-    }
-
-
-    .welcome h1 {
-
-        font-size: 22px;
-
-    }
-
-
-    .welcome-logo {
-
-        width: 65px;
-
-        height: 65px;
-
-        font-size: 42px;
-
-    }
-
-
-    .create-actions {
-
-        flex-wrap: wrap;
-
-    }
-
-
-    .create-actions .publish {
-
-        width: 100%;
-
-        margin-left: 0;
-
-    }
-
-
-    .post-actions button span {
-
-        display: none;
-
-    }
-
-
-    .mobile-nav {
-
-        position: fixed;
-
-        display: flex;
-
-        bottom: 0;
-
-        left: 0;
-
-        right: 0;
-
-        height: 65px;
-
-        background: white;
-
-        border-top:
-            1px solid var(--border);
-
-        z-index: 2000;
-
-        justify-content: space-around;
-
-    }
-
-
-    .mobile-nav button {
-
-        border: none;
-
-        background: transparent;
-
-        color: var(--muted);
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 3px;
-
-        font-size: 18px;
-
-    }
-
-
-    .mobile-nav small {
-
-        font-size: 9px;
-
-    }
-
-
-    .profile-info {
-
-        align-items: flex-start;
-
-        gap: 15px;
-
-    }
-
-}
-
-
-/* ================= DARK MODE ================= */
-
-body.dark {
-
-    --background: #18191a;
-
-    --card: #242526;
-
-    --text: #e4e6eb;
-
-    --muted: #b0b3b8;
-
-    --border: #3e4042;
-
-}
-
-
-body.dark .topbar,
-body.dark .sidebar,
-body.dark .post,
-body.dark .create-post,
-body.dark .feature-card,
-body.dark .friend-card,
-body.dark .chat,
-body.dark .notification,
-body.dark .blog-card,
-body.dark .profile-info,
-body.dark .profile-stats,
-body.dark .profile-about,
-body.dark .mobile-nav {
-
-    background: #242526;
-
-    color: #e4e6eb;
-
-}
-
-
-body.dark .post-actions button {
-
-    background: #242526;
-
-    color: #b0b3b8;
-
-}
-```
-
----
-
-# 3. `app.js`
-
-```javascript
-/* =========================
-   NAVIGATION
-========================= */
-
-function showPage(pageId) {
-
-    document
-        .querySelectorAll(".page")
-        .forEach(page => {
-
-            page.classList.remove("active");
-
-        });
-
-
-    const page =
-        document.getElementById(pageId);
-
-
-    if (page) {
-
-        page.classList.add("active");
-
-    }
-
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-}
-
-
-/* =========================
-   PUBLICATION
-========================= */
-
-function createPost() {
-
-    const input =
-        document.getElementById("postInput");
-
-
-    const text =
-        input.value.trim();
-
-
-    if (!text) {
-
-        alert(
-            "Écris quelque chose avant de publier."
-        );
-
-        return;
-
-    }
-
-
-    const posts =
-        document.getElementById("posts");
-
-
-    const post =
-        document.createElement("article");
-
-
-    post.className = "post";
-
-
-    post.innerHTML = `
-
-        <div class="post-header">
-
-            <img
-                src="https://i.pravatar.cc/100?img=12">
-
-            <div>
-
-                <strong>
-                    Vous
-                </strong>
-
-                <small>
-                    À l'instant
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <p class="post-text">
-            ${escapeHTML(text)}
-        </p>
-
-
-        <div class="post-stats">
-
-            <span>
-                ❤️ 0
-            </span>
-
-            <span>
-                0 commentaire
-            </span>
-
-        </div>
-
-
-        <div class="post-actions">
-
-            <button onclick="likePost(this)">
-                ❤️
-                <span>J'aime</span>
-            </button>
-
-            <button onclick="commentPost()">
-                💬
-                <span>Commenter</span>
-            </button>
-
-            <button onclick="sharePost()">
-                🔄
-                <span>Partager</span>
-            </button>
-
-        </div>
-
-    `;
-
-
-    posts.prepend(post);
-
-
-    input.value = "";
-
-}
-
-
-/* =========================
-   LIKE
-========================= */
-
-function likePost(button) {
-
-    button.classList.toggle("liked");
-
-
-    if (button.classList.contains("liked")) {
-
-        button.style.color = "#1877f2";
-
-    } else {
-
-        button.style.color = "";
-
-    }
-
-}
-
-
-/* =========================
-   COMMENTAIRE
-========================= */
-
-function commentPost() {
-
-    const comment =
-        prompt("Votre commentaire :");
-
-
-    if (comment &&
-        comment.trim()) {
-
-        alert(
-            "Commentaire ajouté !"
-        );
-
-    }
-
-}
-
-
-/* =========================
-   PARTAGE
-========================= */
-
-function sharePost() {
-
-    alert(
-        "Publication partagée sur Kibibi 🔄"
-    );
-
-}
-
-
-/* =========================
-   MESSAGES
-========================= */
-
-function sendMessage() {
-
-    const input =
-        document.getElementById(
-            "messageInput"
-        );
-
-
-    const text =
-        input.value.trim();
-
-
-    if (!text) return;
-
-
-    const container =
-        document.getElementById(
-            "chatMessages"
-        );
-
-
-    const message =
-        document.createElement("div");
-
-
-    message.className =
-        "message sent";
-
-
-    message.textContent =
-        text;
-
-
-    container.appendChild(message);
-
-
-    input.value = "";
-
-
-    container.scrollTop =
-        container.scrollHeight;
-
-}
-
-
-/* =========================
-   RECHERCHE
-========================= */
-
-function searchPosts() {
-
-    const query =
-        document
-            .getElementById("searchInput")
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    const posts =
-        document.querySelectorAll(
-            "#posts .post"
-        );
-
-
-    posts.forEach(post => {
-
-        const content =
-            post.textContent
-                .toLowerCase();
-
-
-        post.style.display =
-            content.includes(query)
-                ? ""
-                : "none";
-
-    });
-
-}
-
-
-/* =========================
-   MODE SOMBRE
-========================= */
-
-function toggleDarkMode() {
-
-    document.body
-        .classList
-        .toggle("dark");
-
-
-    localStorage.setItem(
-
-        "kibibi-dark",
-
-        document.body.classList.contains(
-            "dark"
-        )
-
-    );
-
-}
-
-
-if (
-    localStorage.getItem(
-        "kibibi-dark"
-    ) === "true"
-) {
-
-    document.body
-        .classList
-        .add("dark");
-
-}
-
-
-/* =========================
-   ACTIONS
-========================= */
-
-function photoMessage() {
-
-    alert(
-        "L'envoi réel de photos sera connecté au serveur dans la prochaine version."
-    );
-
-}
-
-
-function videoMessage() {
-
-    alert(
-        "L'envoi réel de vidéos sera connecté au serveur dans la prochaine version."
-    );
-
-}
-
-
-function locationMessage() {
-
-    alert(
-        "La localisation sera disponible dans la prochaine version."
-    );
-
-}
-
-
-/* =========================
-   SÉCURITÉ HTML
-========================= */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-
-    div.textContent =
-        text;
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================
-   PWA
-========================= */
-
-if (
-    "serviceWorker"
-    in navigator
-) {
-
-    window.addEventListener(
-        "load",
-        () => {
-
-            navigator
-                .serviceWorker
-                .register("./sw.js")
-                .then(() => {
-
-                    console.log(
-                        "Kibibi PWA active."
-                    );
-
-                })
-                .catch(error => {
-
-                    console.error(
-                        "Erreur PWA:",
-                        error
-                    );
-
-                });
-
-        }
-    );
-
-}
-```
-
----
-
-# 4. `manifest.json`
-
-```json
-{
-    "name": "Kibibi",
-    "short_name": "Kibibi",
-    "description": "Kibibi - Connectez-vous avec le monde.",
-    "start_url": "./",
-    "scope": "./",
-    "display": "standalone",
-    "orientation": "portrait-primary",
-    "background_color": "#ffffff",
-    "theme_color": "#1877f2",
-
-    "icons": [
-        {
-            "src": "icons/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "icons/icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        }
-    ]
-}
-```
-
-Le `start_url`, le mode `standalone` et les icônes 192/512 sont des éléments importants pour l'installation sur les navigateurs compatibles.
-
----
-
-# 5. `sw.js`
-
-```javascript
-const CACHE_NAME = "kibibi-v1";
-
-const FILES = [
-
-    "./",
-
-    "./index.html",
-
-    "./style.css",
-
-    "./app.js",
-
-    "./manifest.json"
-
-];
-
-
-self.addEventListener(
-    "install",
-    event => {
-
-        event.waitUntil(
-
-            caches
-                .open(CACHE_NAME)
-                .then(cache => {
-
-                    return cache.addAll(
-                        FILES
-                    );
-
-                })
-
-        );
-
-    }
-);
-
-
-self.addEventListener(
-    "activate",
-    event => {
-
-        event.waitUntil(
-
-            caches
-                .keys()
-                .then(keys => {
-
-                    return Promise.all(
-
-                        keys
-                            .filter(
-                                key =>
-                                    key !==
-                                    CACHE_NAME
-                            )
-                            .map(
-                                key =>
-                                    caches.delete(
-                                        key
-                                    )
-                            )
-
-                    );
-
-                })
-
-        );
-
-    }
-);
-
-
-self.addEventListener(
-    "fetch",
-    event => {
-
-        event.respondWith(
-
-            caches
-                .match(
-                    event.request
-                )
-                .then(cached => {
-
-                    return cached ||
-                        fetch(
-                            event.request
-                        );
-
-                })
-
-        );
-
-    }
-);
-```
-
-Le service worker peut servir à mettre en cache les ressources et à améliorer le comportement hors connexion ; il n'est toutefois pas, à lui seul, ce qui rend une PWA installable.
-
----
-
-## 🔵 Pour le logo Kibibi
-
-Le logo dans le code est volontairement **original** :
-
-```text
-     ┌───────┐
-     │       │
-     │   K   │
-     │       │
-     └───────┘
-
-      Kibibi
-```
-
-Il reprend l'idée d'un **logo social bleu, simple et reconnaissable**, mais avec le **K de Kibibi** au lieu de reproduire le logo Facebook.
-
-Pour l'application installée, il faudra créer :
-
-```text
-icons/icon-192.png
-icons/icon-512.png
-```
-
-avec **le même logo K bleu/blanc**. Le manifest les utilisera comme icônes de l'application.
-
-### 🌍 Pour ton objectif « partout dans le monde »
-
-Cette V1 est préparée pour le Web mondial : responsive, PWA, HTTPS et GitHub Pages. GitHub Pages publie directement les fichiers HTML/CSS/JavaScript d'un dépôt et permet aussi d'utiliser un domaine personnalisé.
-
-**Mais attention :** cette V1 est encore une interface côté navigateur. Pour que deux personnes à Bujumbura, Paris, Kinshasa ou New York puissent réellement créer des comptes, s'envoyer des messages, publier des photos et retrouver leurs données après fermeture de l'application, la prochaine étape sera de connecter **Kibibi à un vrai backend + base de données**.
-
-Et pour le logo, je peux aussi te **générer maintenant une vraie icône Kibibi 512×512**, style réseau social bleu, avec un **K blanc moderne**, prête à mettre dans `icons/icon-512.png`.
