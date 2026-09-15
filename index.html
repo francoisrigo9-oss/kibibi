@@ -1,1135 +1,500 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>kibibi</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+          content="PRO MAX - plateforme sociale moderne">
 
-<title>Kibibi - Vidéos</title>
+    <meta name="theme-color" content="#111827">
 
-<meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="style.css">
 
-<!-- Icône de Kibibi -->
-<link rel="icon" type="image/png" href="assets/images/kibibi-icon.png">
+    <link rel="manifest" href="manifest.json">
 
-<link rel="apple-touch-icon"
-href="assets/images/kibibi-icon.png">
-
-<!-- =========================
-     GOOGLE IMA SDK
-========================= -->
-
-<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-
-
-<style>
-
-/* =========================
-   RESET
-========================= */
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html,
-body{
-
-    width:100%;
-    height:100%;
-
-    background:#000;
-
-    font-family:
-    Arial,
-    "Segoe UI",
-    sans-serif;
-
-    overflow:hidden;
-}
-
-
-/* =========================
-   APPLICATION
-========================= */
-
-.kibibi-container{
-
-    width:100%;
-    height:100vh;
-
-    background:#000;
-
-    position:relative;
-
-}
-
-
-/* =========================
-   NOM KIBIBI
-========================= */
-
-.brand-header{
-
-    position:fixed;
-
-    top:15px;
-    left:0;
-
-    width:100%;
-
-    text-align:center;
-
-    z-index:100;
-
-    pointer-events:none;
-
-}
-
-.brand-header h1{
-
-    color:white;
-
-    font-size:27px;
-
-    font-weight:900;
-
-    letter-spacing:3px;
-
-    text-shadow:
-    0 2px 10px rgba(0,0,0,.8);
-
-}
-
-.brand-header span{
-
-    color:#ff1493;
-
-}
-
-
-/* =========================
-   FLUX
-========================= */
-
-.tiktok-container{
-
-    width:100%;
-    height:100vh;
-
-    overflow-y:auto;
-    overflow-x:hidden;
-
-    scroll-snap-type:y mandatory;
-
-    scroll-behavior:smooth;
-
-    scrollbar-width:none;
-
-}
-
-.tiktok-container::-webkit-scrollbar{
-
-    display:none;
-
-}
-
-
-/* =========================
-   VIDEO
-========================= */
-
-.video-feed{
-
-    width:100%;
-    height:100vh;
-
-    position:relative;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    scroll-snap-align:start;
-
-    scroll-snap-stop:always;
-
-    background:#000;
-
-}
-
-.kibibi-video{
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    background:#000;
-
-}
-
-
-/* =========================
-   COUCHE SOMBRE
-========================= */
-
-.video-feed::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    height:35%;
-
-    background:
-    linear-gradient(
-        transparent,
-        rgba(0,0,0,.75)
-    );
-
-    pointer-events:none;
-
-}
-
-
-/* =========================
-   BOUTONS
-========================= */
-
-.side-bar{
-
-    position:absolute;
-
-    right:15px;
-
-    bottom:120px;
-
-    z-index:50;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:8px;
-
-}
-
-
-/* bouton */
-
-.action-btn{
-
-    width:55px;
-    height:55px;
-
-    border:none;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:
-    rgba(255,255,255,.20);
-
-    color:white;
-
-    font-size:24px;
-
-    cursor:pointer;
-
-    backdrop-filter:blur(8px);
-
-    box-shadow:
-    0 3px 15px rgba(0,0,0,.3);
-
-    transition:.2s;
-
-}
-
-.action-btn:active{
-
-    transform:scale(.88);
-
-}
-
-
-/* bouton bonus */
-
-.action-btn.monetize{
-
-    background:#ff1493;
-
-    animation:pulse 2s infinite;
-
-}
-
-
-/* bouton son */
-
-.sound-btn{
-
-    background:
-    rgba(0,0,0,.45);
-
-}
-
-
-/* =========================
-   BONUS
-========================= */
-
-.bonus-text{
-
-    color:white;
-
-    font-size:11px;
-
-    font-weight:bold;
-
-    text-shadow:
-    0 2px 5px #000;
-
-}
-
-
-/* =========================
-   INFOS VIDEO
-========================= */
-
-.video-meta{
-
-    position:absolute;
-
-    left:15px;
-
-    bottom:35px;
-
-    z-index:50;
-
-    max-width:75%;
-
-    color:white;
-
-    text-shadow:
-    0 2px 5px rgba(0,0,0,.9);
-
-}
-
-.video-meta h3{
-
-    font-size:17px;
-
-    margin-bottom:7px;
-
-}
-
-.video-meta p{
-
-    font-size:14px;
-
-    line-height:1.4;
-
-}
-
-
-/* =========================
-   INDICATEUR CHARGEMENT
-========================= */
-
-.loading{
-
-    position:absolute;
-
-    top:50%;
-    left:50%;
-
-    transform:
-    translate(-50%,-50%);
-
-    color:white;
-
-    z-index:30;
-
-    display:none;
-
-    font-size:14px;
-
-}
-
-
-/* =========================
-   ALERT
-========================= */
-
-.data-alert{
-
-    position:fixed;
-
-    top:65px;
-
-    left:50%;
-
-    transform:
-    translateX(-50%);
-
-    z-index:200;
-
-    display:none;
-
-    background:
-    rgba(0,0,0,.85);
-
-    color:#ff1493;
-
-    padding:10px 18px;
-
-    border-radius:25px;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    white-space:nowrap;
-
-}
-
-
-/* =========================
-   ANIMATION
-========================= */
-
-@keyframes pulse{
-
-    0%{
-        transform:scale(1);
-        box-shadow:
-        0 0 0 0
-        rgba(255,20,147,.7);
-    }
-
-    70%{
-        transform:scale(1.05);
-        box-shadow:
-        0 0 0 15px
-        rgba(255,20,147,0);
-    }
-
-    100%{
-        transform:scale(1);
-        box-shadow:
-        0 0 0 0
-        rgba(255,20,147,0);
-    }
-
-}
-
-
-/* =========================
-   PETITS ÉCRANS
-========================= */
-
-@media(max-width:500px){
-
-    .brand-header h1{
-
-        font-size:23px;
-
-    }
-
-    .side-bar{
-
-        right:10px;
-
-        bottom:105px;
-
-    }
-
-    .action-btn{
-
-        width:50px;
-        height:50px;
-
-        font-size:21px;
-
-    }
-
-    .video-meta{
-
-        bottom:25px;
-
-    }
-
-}
-
-
-/* =========================
-   GRAND ÉCRAN
-========================= */
-
-@media(min-width:800px){
-
-    .tiktok-container{
-
-        max-width:500px;
-
-        margin:auto;
-
-        box-shadow:
-        0 0 50px
-        rgba(0,0,0,.8);
-
-    }
-
-    .brand-header{
-
-        max-width:500px;
-
-        left:50%;
-
-        transform:
-        translateX(-50%);
-
-    }
-
-}
-
-</style>
-
+    <link rel="icon"
+          href="https://cdn-icons-png.flaticon.com/512/847/847969.png">
 </head>
-
 
 <body>
 
+<!-- ================= HEADER ================= -->
 
-<div class="kibibi-container">
+<header class="topbar">
 
+    <div class="logo">
+        <span>PRO</span> MAX
+    </div>
 
-<!-- =========================
-     NOM DE L'APPLICATION
-========================= -->
+    <div class="search">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Rechercher..."
+            onkeyup="searchContent()">
 
-<div class="brand-header">
+        🔍
+    </div>
 
-<h1>
-KIBI<span>BI</span>
-</h1>
+    <div class="header-actions">
 
-</div>
+        <button onclick="showPage('home')">
+            🏠
+        </button>
 
+        <button onclick="showPage('messages')">
+            💬
+        </button>
 
-<!-- =========================
-     MESSAGE
-========================= -->
+        <button onclick="showPage('notifications')">
+            🔔
+            <span class="badge">3</span>
+        </button>
 
-<div
-class="data-alert"
-id="status-alert"
->
-Chargement...
-</div>
+        <button onclick="showPage('profile')">
+            👤
+        </button>
 
+    </div>
 
-<!-- =========================
-     FLUX VIDEO
-========================= -->
-
-<div
-class="tiktok-container"
-id="feed-container"
->
-
-
-<!-- =========================
-     VIDEO 1
-========================= -->
-
-<section class="video-feed">
-
-<video
-class="kibibi-video"
-loop
-muted
-autoplay
-playsinline
-preload="metadata"
->
-
-<source
-src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-type="video/mp4"
->
-
-Votre navigateur ne supporte pas les vidéos.
-
-</video>
+</header>
 
 
-<div class="loading">
-Chargement...
-</div>
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="user-mini">
+
+        <img src="https://i.pravatar.cc/100?img=12">
+
+        <div>
+            <strong>Utilisateur</strong>
+            <small>@promax</small>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <button onclick="showPage('home')">
+        🏠 Accueil
+    </button>
+
+    <button onclick="showPage('explore')">
+        🔎 Explorer
+    </button>
+
+    <button onclick="showPage('friends')">
+        👥 Amis
+    </button>
+
+    <button onclick="showPage('messages')">
+        💬 Messages
+    </button>
+
+    <button onclick="showPage('notifications')">
+        🔔 Notifications
+    </button>
+
+    <button onclick="showPage('gallery')">
+        🖼️ Galerie
+    </button>
+
+    <button onclick="showPage('blog')">
+        📰 Blog
+    </button>
+
+    <button onclick="showPage('profile')">
+        👤 Profil
+    </button>
+
+    <hr>
+
+    <button onclick="toggleDarkMode()">
+        🌙 Mode sombre
+    </button>
+
+</aside>
 
 
-<div class="side-bar">
+<!-- ================= MAIN ================= -->
+
+<main id="mainContent">
 
 
-<button
-class="action-btn sound-btn"
-onclick="toggleSound(this)"
-title="Son"
->
-🔇
-</button>
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+    <div class="welcome">
+
+        <h1>Bienvenue sur PRO MAX 🚀</h1>
+
+        <p>
+            Connecte-toi, partage et découvre ton monde.
+        </p>
+
+    </div>
 
 
-<button
-class="action-btn monetize"
-onclick="startDataAd(this)"
-title="Bonus"
->
-💰
-</button>
+    <!-- CREATE POST -->
+
+    <div class="create-post">
+
+        <div class="post-user">
+
+            <img src="https://i.pravatar.cc/100?img=12">
+
+            <input
+                id="postInput"
+                type="text"
+                placeholder="Quoi de neuf ?">
+
+        </div>
+
+        <div class="post-options">
+
+            <button onclick="addPhoto()">
+                📷 Photo
+            </button>
+
+            <button>
+                🎥 Vidéo
+            </button>
+
+            <button>
+                📍 Localisation
+            </button>
+
+            <button
+                class="publish"
+                onclick="createPost()">
+                Publier
+            </button>
+
+        </div>
+
+    </div>
 
 
-<div class="bonus-text">
-Bonus
-</div>
+    <!-- POSTS -->
+
+    <div id="posts">
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <img src="https://i.pravatar.cc/100?img=11">
+
+                <div>
+                    <strong>Jean Michel</strong>
+                    <small>Il y a 20 min</small>
+                </div>
+
+            </div>
+
+            <p>
+                Bienvenue sur PRO MAX 🚀
+                Une nouvelle plateforme sociale moderne.
+            </p>
+
+            <div class="post-actions">
+
+                <button onclick="likePost(this)">
+                    ❤️ <span>24</span>
+                </button>
+
+                <button onclick="commentPost()">
+                    💬 Commenter
+                </button>
+
+                <button onclick="sharePost()">
+                    🔄 Partager
+                </button>
+
+            </div>
+
+        </article>
 
 
-</div>
+        <article class="post">
 
+            <div class="post-header">
 
-<div class="video-meta">
+                <img src="https://i.pravatar.cc/100?img=32">
 
-<h3>
-@kibibi
-</h3>
+                <div>
+                    <strong>Marie Claire</strong>
+                    <small>Il y a 1 h</small>
+                </div>
 
-<p>
-Bienvenue sur Kibibi ! 🌍
-Découvrez les vidéos du monde entier.
-</p>
+            </div>
 
-</div>
+            <p>
+                Ma nouvelle photo 📸🔥
+            </p>
+
+            <img
+                class="post-image"
+                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80">
+
+            <div class="post-actions">
+
+                <button onclick="likePost(this)">
+                    ❤️ <span>45</span>
+                </button>
+
+                <button onclick="commentPost()">
+                    💬 Commenter
+                </button>
+
+                <button onclick="sharePost()">
+                    🔄 Partager
+                </button>
+
+            </div>
+
+        </article>
+
+    </div>
 
 </section>
 
 
+<!-- EXPLORE -->
 
-<!-- =========================
-     VIDEO 2
-========================= -->
+<section id="explore" class="page">
 
-<section class="video-feed">
+    <h1>🔎 Explorer</h1>
 
-<video
-class="kibibi-video"
-loop
-muted
-playsinline
-preload="metadata"
->
+    <div class="cards">
 
-<source
-src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
-type="video/mp4"
->
+        <div class="card">
+            <h3>🔥 Tendances</h3>
+            <p>Découvrez les contenus populaires.</p>
+        </div>
 
-Votre navigateur ne supporte pas les vidéos.
+        <div class="card">
+            <h3>👥 Utilisateurs</h3>
+            <p>Trouvez de nouvelles personnes.</p>
+        </div>
 
-</video>
+        <div class="card">
+            <h3>📰 Actualités</h3>
+            <p>Les dernières publications.</p>
+        </div>
 
-
-<div class="loading">
-Chargement...
-</div>
-
-
-<div class="side-bar">
-
-
-<button
-class="action-btn sound-btn"
-onclick="toggleSound(this)"
->
-🔇
-</button>
-
-
-<button
-class="action-btn monetize"
-onclick="startDataAd(this)"
->
-💰
-</button>
-
-
-<div class="bonus-text">
-Bonus
-</div>
-
-
-</div>
-
-
-<div class="video-meta">
-
-<h3>
-@africantech
-</h3>
-
-<p>
-La technologie africaine en vidéo 🚀🔥
-</p>
-
-</div>
+    </div>
 
 </section>
 
 
+<!-- FRIENDS -->
 
-<!-- =========================
-     VIDEO 3
-========================= -->
+<section id="friends" class="page">
 
-<section class="video-feed">
+    <h1>👥 Mes amis</h1>
 
-<video
-class="kibibi-video"
-loop
-muted
-playsinline
-preload="metadata"
->
+    <div class="friends-grid">
 
-<source
-src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4"
-type="video/mp4"
->
+        <div class="friend">
+            <img src="https://i.pravatar.cc/150?img=5">
+            <strong>Alex</strong>
+            <button>Voir profil</button>
+        </div>
 
-Votre navigateur ne supporte pas les vidéos.
+        <div class="friend">
+            <img src="https://i.pravatar.cc/150?img=8">
+            <strong>Sarah</strong>
+            <button>Voir profil</button>
+        </div>
 
-</video>
+        <div class="friend">
+            <img src="https://i.pravatar.cc/150?img=15">
+            <strong>David</strong>
+            <button>Voir profil</button>
+        </div>
 
-
-<div class="loading">
-Chargement...
-</div>
-
-
-<div class="side-bar">
-
-
-<button
-class="action-btn sound-btn"
-onclick="toggleSound(this)"
->
-🔇
-</button>
-
-
-<button
-class="action-btn monetize"
-onclick="startDataAd(this)"
->
-💰
-</button>
-
-
-<div class="bonus-text">
-Bonus
-</div>
-
-
-</div>
-
-
-<div class="video-meta">
-
-<h3>
-@kibibi_world
-</h3>
-
-<p>
-Partage tes moments avec la communauté Kibibi ❤️
-</p>
-
-</div>
+    </div>
 
 </section>
 
 
-</div>
+<!-- MESSAGES -->
 
-</div>
+<section id="messages" class="page">
 
+    <h1>💬 Messages</h1>
 
-<script>
+    <div class="chat">
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+        <div class="chat-header">
+            <strong>Conversation</strong>
+        </div>
 
-const feed =
-document.getElementById("feed-container");
+        <div id="chatMessages">
 
-const videos =
-document.querySelectorAll(".kibibi-video");
+            <div class="message received">
+                Salut 👋
+            </div>
 
-const alertBox =
-document.getElementById("status-alert");
+            <div class="message sent">
+                Salut ! Ça va ?
+            </div>
 
-let activeVideo = videos[0];
+        </div>
 
-let adPlaying = false;
+        <div class="chat-input">
 
+            <input
+                id="messageInput"
+                placeholder="Écrire un message...">
 
-/* =====================================================
-   AFFICHER UN MESSAGE
-===================================================== */
+            <button onclick="sendMessage()">
+                ➤
+            </button>
 
-function showAlert(message){
+        </div>
 
-    alertBox.innerText = message;
+    </div>
 
-    alertBox.style.display = "block";
+</section>
 
-    setTimeout(function(){
 
-        alertBox.style.display = "none";
+<!-- NOTIFICATIONS -->
 
-    },3000);
+<section id="notifications" class="page">
 
-}
+    <h1>🔔 Notifications</h1>
 
+    <div class="notification">
+        ❤️ Jean a aimé votre publication.
+    </div>
 
-/* =====================================================
-   SON
-===================================================== */
+    <div class="notification">
+        👥 Sarah vous a envoyé une demande d'ami.
+    </div>
 
-function toggleSound(button){
+    <div class="notification">
+        💬 David a commenté votre publication.
+    </div>
 
-    const feedVideo =
-    button.closest(".video-feed")
-    .querySelector("video");
+</section>
 
-    videos.forEach(function(video){
 
-        if(video !== feedVideo){
+<!-- GALLERY -->
 
-            video.muted = true;
+<section id="gallery" class="page">
 
-        }
+    <h1>🖼️ Galerie</h1>
 
-    });
+    <div class="gallery">
 
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=500&q=80">
 
-    feedVideo.muted =
-    !feedVideo.muted;
+        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=500&q=80">
 
+        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=500&q=80">
 
-    if(feedVideo.muted){
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80">
 
-        button.innerText="🔇";
+    </div>
 
-    }else{
+</section>
 
-        button.innerText="🔊";
 
-        activeVideo =
-        feedVideo;
+<!-- BLOG -->
 
-        feedVideo.play().catch(function(){});
+<section id="blog" class="page">
 
-    }
+    <h1>📰 Blog</h1>
 
-}
+    <article class="blog">
 
+        <h2>Bienvenue sur PRO MAX</h2>
 
-/* =====================================================
-   OBSERVER POUR LE SWIPE
-===================================================== */
+        <p>
+            Découvrez notre plateforme et toutes ses fonctionnalités.
+        </p>
 
-const observer =
-new IntersectionObserver(
+        <button>Lire plus</button>
 
-function(entries){
+    </article>
 
-    entries.forEach(function(entry){
+</section>
 
-        const video =
-        entry.target;
 
+<!-- PROFILE -->
 
-        if(entry.isIntersecting){
+<section id="profile" class="page">
 
-            activeVideo =
-            video;
+    <div class="profile-cover">
 
+        <div class="profile-info">
 
-            if(!adPlaying){
+            <img
+                src="https://i.pravatar.cc/200?img=12">
 
-                video.play()
-                .catch(function(){});
+            <h1>Utilisateur PRO MAX</h1>
 
-            }
+            <p>@promax</p>
 
-        }else{
+            <button>
+                ✏️ Modifier le profil
+            </button>
 
-            video.pause();
+        </div>
 
-        }
+    </div>
 
-    });
 
-},
+    <div class="profile-stats">
 
-{
-    threshold:0.65
-});
+        <div>
+            <strong>125</strong>
+            <span>Publications</span>
+        </div>
 
+        <div>
+            <strong>2.5K</strong>
+            <span>Amis</span>
+        </div>
 
-videos.forEach(function(video){
+        <div>
+            <strong>8.7K</strong>
+            <span>Abonnés</span>
+        </div>
 
-    observer.observe(video);
+    </div>
 
-});
+</section>
 
+</main>
 
-/* =====================================================
-   PAUSE AVANT DE QUITTER
-===================================================== */
 
-document.addEventListener(
-"visibilitychange",
-function(){
+<!-- ================= MOBILE NAV ================= -->
 
-    if(document.hidden){
+<nav class="mobile-nav">
 
-        videos.forEach(function(video){
+    <button onclick="showPage('home')">🏠</button>
 
-            video.pause();
+    <button onclick="showPage('explore')">🔎</button>
 
-        });
+    <button onclick="showPage('friends')">👥</button>
 
-    }else{
+    <button onclick="showPage('messages')">💬</button>
 
-        if(!adPlaying){
+    <button onclick="showPage('profile')">👤</button>
 
-            activeVideo
-            .play()
-            .catch(function(){});
+</nav>
 
-        }
 
-    }
-
-});
-
-
-/* =====================================================
-   BONUS
-===================================================== */
-
-function startDataAd(button){
-
-    if(adPlaying){
-
-        return;
-
-    }
-
-
-    adPlaying=true;
-
-
-    const videoFeed =
-    button.closest(".video-feed");
-
-    const video =
-    videoFeed.querySelector("video");
-
-
-    showAlert(
-        "💰 Bonus vidéo en préparation..."
-    );
-
-
-    /*
-       IMPORTANT :
-
-       Cette fonction utilise une vidéo
-       de démonstration.
-
-       Une vraie publicité Google IMA
-       nécessite une intégration VAST/
-       VMAP avec un AdDisplayContainer,
-       un AdsLoader et un AdManager.
-    */
-
-
-    const ancienneSource =
-    video.querySelector("source");
-
-
-    const ancienneURL =
-    ancienneSource.src;
-
-
-    video.pause();
-
-
-    /*
-       Vidéo de démonstration
-    */
-
-    video.src =
-    "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
-
-
-    video.loop=false;
-
-    video.muted=false;
-
-
-    video.load();
-
-
-    video.play()
-    .then(function(){
-
-        showAlert(
-            "🎁 Bonus en cours..."
-        );
-
-    })
-    .catch(function(){
-
-        video.muted=true;
-
-        video.play();
-
-    });
-
-
-    video.onended=function(){
-
-        video.src =
-        ancienneURL;
-
-        video.loop=true;
-
-        video.muted=true;
-
-        video.load();
-
-        video.play()
-        .catch(function(){});
-
-
-        adPlaying=false;
-
-
-        showAlert(
-            "✅ Bonus terminé !"
-        );
-
-    };
-
-}
-
-
-/* =====================================================
-   PRECHARGEMENT
-===================================================== */
-
-videos.forEach(function(video){
-
-    video.addEventListener(
-        "waiting",
-        function(){
-
-            const loading =
-            video
-            .closest(".video-feed")
-            .querySelector(".loading");
-
-            loading.style.display="block";
-
-        });
-
-    video.addEventListener(
-        "playing",
-        function(){
-
-            const loading =
-            video
-            .closest(".video-feed")
-            .querySelector(".loading");
-
-            loading.style.display="none";
-
-        });
-
-});
-
-
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if("serviceWorker" in navigator){
-
-    window.addEventListener(
-        "load",
-        function(){
-
-            navigator.serviceWorker
-            .register("./sw.js")
-
-            .then(function(){
-
-                console.log(
-                    "✅ Kibibi PWA activée"
-                );
-
-            })
-
-            .catch(function(error){
-
-                console.log(
-                    "❌ Erreur Service Worker :",
-                    error
-                );
-
-            });
-
-        });
-
-}
-
-</script>
-
+<script src="app.js"></script>
 
 </body>
-
 </html>
-```
